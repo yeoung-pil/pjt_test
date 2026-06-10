@@ -68,6 +68,7 @@
                 <a href="#market-data" class="hover:text-emerald-600 transition">시장 데이터</a>
                 <a href="#business-roadmap" class="hover:text-emerald-600 transition">사업화 로드맵</a>
                 <a href="#roi-calculator" class="hover:text-emerald-600 transition">수익 시뮬레이터</a>
+                <a href="#contact" class="hover:text-emerald-600 transition">제휴 문의</a>
             </div>
             <button id="mobile-menu-btn" class="md:hidden text-stone-600 focus:outline-none">
                 ☰
@@ -80,6 +81,7 @@
                 <a href="#market-data" class="block text-stone-600">시장 데이터</a>
                 <a href="#business-roadmap" class="block text-stone-600">사업화 로드맵</a>
                 <a href="#roi-calculator" class="block text-stone-600">수익 시뮬레이터</a>
+                <a href="#contact" class="block text-stone-600">제휴 문의</a>
             </div>
         </div>
     </nav>
@@ -300,6 +302,55 @@
                         <p class="text-xs text-stone-500">※ 이는 추정치이며 실제 환경에 따라 달라질 수 있습니다.</p>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 5: Partnership Inquiry (Contact) -->
+    <section id="contact" class="py-16 bg-white">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-stone-800 mb-4">제휴 및 도입 문의</h2>
+                <p class="text-stone-600">
+                    정밀농업 솔루션 도입이나 비즈니스 협업에 관심이 있으신가요? <br class="hidden md:block">
+                    아래 폼을 작성해 주시면 담당자가 확인 후 빠른 시일 내에 연락드리겠습니다.
+                </p>
+            </div>
+
+            <div class="bg-stone-50 rounded-2xl p-8 md:p-12 border border-stone-200 shadow-sm">
+                <form action="https://formspree.io/f/maqzblql" method="POST" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="name" class="block text-sm font-bold text-stone-700 mb-2">이름 / 기업명</label>
+                            <input type="text" id="name" name="name" required class="w-full px-4 py-3 rounded-lg border border-stone-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition" placeholder="홍길동 (주식회사 정밀)">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-bold text-stone-700 mb-2">이메일 주소</label>
+                            <input type="email" id="email" name="email" required class="w-full px-4 py-3 rounded-lg border border-stone-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition" placeholder="example@domain.com">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="subject" class="block text-sm font-bold text-stone-700 mb-2">문의 유형</label>
+                        <select id="subject" name="subject" class="w-full px-4 py-3 rounded-lg border border-stone-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition bg-white">
+                            <option value="partnership">비즈니스 제휴 문의</option>
+                            <option value="solution">솔루션 도입 상담</option>
+                            <option value="tech">기술 협력 문의</option>
+                            <option value="other">기타 문의</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="message" class="block text-sm font-bold text-stone-700 mb-2">문의 내용</label>
+                        <textarea id="message" name="message" rows="5" required class="w-full px-4 py-3 rounded-lg border border-stone-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition" placeholder="협력 방안이나 궁금하신 점을 자유롭게 작성해 주세요."></textarea>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="w-full md:w-auto px-12 py-4 bg-emerald-600 text-white font-bold rounded-lg hover:bg-emerald-700 transition shadow-lg shadow-emerald-100">
+                            문의 보내기
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </section>
