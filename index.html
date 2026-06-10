@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>정밀농업: 기술 학습 및 사업화 가이드</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <style>
+        /* Custom Chart Container Styling per requirements */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Active state for roadmap */
+        .step-active {
+            border-left-color: #059669 !important; /* emerald-600 */
+            background-color: #ecfdf5; /* emerald-50 */
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800 font-sans antialiased">
+
+    <!-- Chosen Palette: Warm Neutrals (Stone/Beige) with Emerald Green Accents for an agricultural/organic feel. -->
+    <!-- Application Structure Plan: 
+         1. Hero Section: Hook regarding the future of farming.
+         2. Tech Ecosystem (Learn): Interactive grid explaining core technologies (IoT, Drones, AI).
+         3. Data Dashboard (Analyze): Charts showing market growth and efficiency comparison to validate business viability.
+         4. Business Roadmap (Action): Interactive step-by-step guide to starting a precision ag business.
+         5. Simulator (Engage): Simple ROI calculator to demonstrate value to potential clients.
+         Rationale: Moves from concept -> validation -> execution -> sales tool.
+    -->
+    <!-- Visualization & Content Choices:
+         1. Line Chart (Chart.js): Shows global market growth (Trend/Change).
+         2. Radar Chart (Chart.js): Compares traditional vs. precision farming efficiency (Comparison).
+         3. Bar Chart (Plotly): Adoption rates by crop type (Distribution).
+         4. Interactive Lists/Cards: Technology breakdown (Organization).
+         5. Input/Output Calculator: ROI estimation (Engagement/Utility).
+         NO SVG/Mermaid used.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm border-b border-stone-200">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="text-xl font-bold text-emerald-800 flex items-center gap-2">
+                <span>🌱</span> 정밀농업 인사이트
+            </div>
+            <div class="hidden md:flex space-x-6 text-sm font-medium text-stone-600">
+                <a href="#tech-ecosystem" class="hover:text-emerald-600 transition">핵심 기술</a>
+                <a href="#market-data" class="hover:text-emerald-600 transition">시장 데이터</a>
+                <a href="#business-roadmap" class="hover:text-emerald-600 transition">사업화 로드맵</a>
+                <a href="#roi-calculator" class="hover:text-emerald-600 transition">수익 시뮬레이터</a>
+            </div>
+            <button id="mobile-menu-btn" class="md:hidden text-stone-600 focus:outline-none">
+                ☰
+            </button>
+        </div>
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-stone-100 p-4">
+            <div class="flex flex-col space-y-3 text-sm">
+                <a href="#tech-ecosystem" class="block text-stone-600">핵심 기술</a>
+                <a href="#market-data" class="block text-stone-600">시장 데이터</a>
+                <a href="#business-roadmap" class="block text-stone-600">사업화 로드맵</a>
+                <a href="#roi-calculator" class="block text-stone-600">수익 시뮬레이터</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="bg-gradient-to-b from-emerald-50 to-stone-50 py-16 md:py-24">
+        <div class="container mx-auto px-4 text-center max-w-4xl">
+            <span class="inline-block px-3 py-1 bg-emerald-100 text-emerald-800 text-xs font-bold rounded-full mb-4">Smart Farming Future</span>
+            <h1 class="text-4xl md:text-5xl font-extrabold text-stone-900 mb-6 leading-tight">
+                데이터로 짓는 농사, <br><span class="text-emerald-600">정밀농업(Precision Agriculture)</span>
+            </h1>
+            <p class="text-lg text-stone-600 mb-8 leading-relaxed max-w-2xl mx-auto">
+                IoT 센서, 드론, AI 분석을 통해 작물 수확량을 극대화하고 자원 낭비를 최소화합니다.
+                이 학습 도구는 기술의 이해부터 실제 비즈니스 모델 구축까지의 핵심 정보를 제공합니다.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#tech-ecosystem" class="px-8 py-3 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition shadow-lg shadow-emerald-200">
+                    기술 학습하기
+                </a>
+                <a href="#business-roadmap" class="px-8 py-3 bg-white text-emerald-700 border border-emerald-200 font-semibold rounded-lg hover:bg-emerald-50 transition">
+                    사업화 전략 보기
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Section 1: Technology Ecosystem (Learn) -->
+    <section id="tech-ecosystem" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center mb-12">
+                <h2 class="text-3xl font-bold text-stone-800 mb-4">핵심 기술 생태계</h2>
+                <p class="text-stone-600">
+                    정밀농업은 단일 기술이 아닌, 데이터 수집-분석-실행의 순환 구조입니다. 
+                    아래 카드를 클릭하여 각 기술 요소가 비즈니스에서 어떤 역할을 하는지 확인하세요.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <!-- Interactive Tech Cards -->
+                <div class="tech-card cursor-pointer p-6 rounded-xl border border-stone-200 hover:shadow-lg hover:border-emerald-400 transition bg-stone-50 group" data-tech="iot">
+                    <div class="text-4xl mb-4 group-hover:scale-110 transition-transform">📡</div>
+                    <h3 class="text-xl font-bold text-stone-800 mb-2">IoT 센서</h3>
+                    <p class="text-sm text-stone-500">토양, 기후 데이터 실시간 수집</p>
+                </div>
+                <div class="tech-card cursor-pointer p-6 rounded-xl border border-stone-200 hover:shadow-lg hover:border-emerald-400 transition bg-stone-50 group" data-tech="drones">
+                    <div class="text-4xl mb-4 group-hover:scale-110 transition-transform">🚁</div>
+                    <h3 class="text-xl font-bold text-stone-800 mb-2">드론 & 이미징</h3>
+                    <p class="text-sm text-stone-500">작물 생육 상태 스펙트럼 분석</p>
+                </div>
+                <div class="tech-card cursor-pointer p-6 rounded-xl border border-stone-200 hover:shadow-lg hover:border-emerald-400 transition bg-stone-50 group" data-tech="ai">
+                    <div class="text-4xl mb-4 group-hover:scale-110 transition-transform">🧠</div>
+                    <h3 class="text-xl font-bold text-stone-800 mb-2">AI & 빅데이터</h3>
+                    <p class="text-sm text-stone-500">생육 예측 및 최적 처방 도출</p>
+                </div>
+                <div class="tech-card cursor-pointer p-6 rounded-xl border border-stone-200 hover:shadow-lg hover:border-emerald-400 transition bg-stone-50 group" data-tech="vrt">
+                    <div class="text-4xl mb-4 group-hover:scale-110 transition-transform">🚜</div>
+                    <h3 class="text-xl font-bold text-stone-800 mb-2">변량 살포(VRT)</h3>
+                    <p class="text-sm text-stone-500">위치별 비료/농약 차등 살포</p>
+                </div>
+            </div>
+
+            <!-- Dynamic Tech Detail View -->
+            <div id="tech-detail" class="bg-emerald-50 rounded-xl p-8 border border-emerald-100 hidden">
+                <div class="flex flex-col md:flex-row gap-6 items-start">
+                    <div class="flex-1">
+                        <h3 id="detail-title" class="text-2xl font-bold text-emerald-800 mb-3">기술 상세</h3>
+                        <p id="detail-desc" class="text-stone-700 mb-4 leading-relaxed">카드를 선택해주세요.</p>
+                        <div class="bg-white p-4 rounded-lg border border-emerald-100">
+                            <h4 class="text-sm font-bold text-stone-500 uppercase mb-2">사업화 포인트</h4>
+                            <p id="detail-biz" class="text-emerald-700 font-medium">...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: Market Analysis (Data) -->
+    <section id="market-data" class="py-16 bg-stone-50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center mb-12">
+                <h2 class="text-3xl font-bold text-stone-800 mb-4">시장 데이터 분석</h2>
+                <p class="text-stone-600">
+                    사업성을 검증하기 위한 핵심 지표입니다. 
+                    정밀농업 시장의 성장성과 도입 시 얻을 수 있는 구체적인 효율성 지표를 확인하세요.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <!-- Chart 1: Market Growth -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-stone-100">
+                    <h3 class="text-lg font-bold text-stone-800 mb-2">🌐 글로벌 정밀농업 시장 규모 예측</h3>
+                    <p class="text-xs text-stone-500 mb-4">단위: 10억 달러 (CAGR: 12.8%)</p>
+                    <div class="chart-container">
+                        <canvas id="growthChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Chart 2: Efficiency Comparison -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-stone-100">
+                    <h3 class="text-lg font-bold text-stone-800 mb-2">⚖️ 관행농업 vs 정밀농업 효율성 비교</h3>
+                    <p class="text-xs text-stone-500 mb-4">정밀농업 도입 시 자원 절감 및 생산성 향상 지표</p>
+                    <div class="chart-container">
+                        <canvas id="efficiencyChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Chart 3: Adoption by Sector -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-stone-100 mt-8">
+                <h3 class="text-lg font-bold text-stone-800 mb-2">📊 작물별 스마트팜/정밀농업 도입률</h3>
+                <p class="text-xs text-stone-500 mb-4">시설원예 분야가 가장 높은 도입률을 보이고 있습니다.</p>
+                <div class="chart-container w-full">
+                    <div id="adoptionChart"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: Business Roadmap (Action) -->
+    <section id="business-roadmap" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center mb-12">
+                <h2 class="text-3xl font-bold text-stone-800 mb-4">사업화 로드맵</h2>
+                <p class="text-stone-600">
+                    정밀농업 기술을 활용하여 실제 비즈니스를 시작하기 위한 단계별 가이드입니다.
+                    단계를 클릭하여 세부 실행 전략을 확인하세요.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+                <!-- Vertical Stepper (Left) -->
+                <div class="md:col-span-4 flex flex-col space-y-2">
+                    <button class="step-btn w-full text-left p-4 border-l-4 border-stone-200 hover:bg-stone-50 transition rounded-r-lg focus:outline-none step-active" data-step="1">
+                        <span class="block text-xs font-bold text-stone-400 uppercase">Phase 01</span>
+                        <span class="text-lg font-bold text-stone-800">니즈 분석 및 타겟팅</span>
+                    </button>
+                    <button class="step-btn w-full text-left p-4 border-l-4 border-stone-200 hover:bg-stone-50 transition rounded-r-lg focus:outline-none" data-step="2">
+                        <span class="block text-xs font-bold text-stone-400 uppercase">Phase 02</span>
+                        <span class="text-lg font-bold text-stone-800">기술 솔루션 선정</span>
+                    </button>
+                    <button class="step-btn w-full text-left p-4 border-l-4 border-stone-200 hover:bg-stone-50 transition rounded-r-lg focus:outline-none" data-step="3">
+                        <span class="block text-xs font-bold text-stone-400 uppercase">Phase 03</span>
+                        <span class="text-lg font-bold text-stone-800">데이터 수집 및 파일럿</span>
+                    </button>
+                    <button class="step-btn w-full text-left p-4 border-l-4 border-stone-200 hover:bg-stone-50 transition rounded-r-lg focus:outline-none" data-step="4">
+                        <span class="block text-xs font-bold text-stone-400 uppercase">Phase 04</span>
+                        <span class="text-lg font-bold text-stone-800">서비스 확장 및 구독화</span>
+                    </button>
+                </div>
+
+                <!-- Content Area (Right) -->
+                <div class="md:col-span-8 bg-stone-50 rounded-2xl p-8 border border-stone-200 relative overflow-hidden">
+                    <div id="roadmap-content" class="relative z-10">
+                        <!-- Content Injected via JS -->
+                    </div>
+                    <!-- Decorative Icon -->
+                    <div class="absolute -bottom-10 -right-10 text-9xl opacity-5 select-none text-emerald-900">
+                        🚀
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: ROI Simulator (Engagement) -->
+    <section id="roi-calculator" class="py-16 bg-emerald-900 text-white">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-3xl font-bold mb-4">수익 시뮬레이터</h2>
+                    <p class="text-emerald-200 mb-8 leading-relaxed">
+                        고객에게 정밀농업 솔루션을 제안할 때 가장 중요한 것은 <strong>투자 대비 수익(ROI)</strong>입니다.
+                        농장 규모와 예상 절감률을 입력하여 잠재적인 경제적 가치를 산출해보세요.
+                    </p>
+                    <ul class="space-y-4 text-emerald-100 text-sm">
+                        <li class="flex items-center gap-3">
+                            <span class="bg-emerald-700 p-1 rounded">💧</span> 물 사용량 평균 20~30% 절감
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="bg-emerald-700 p-1 rounded">💊</span> 비료/농약 사용량 평균 15~20% 절감
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="bg-emerald-700 p-1 rounded">📈</span> 생산성 평균 10~15% 증대
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-white text-stone-800 rounded-xl p-6 md:p-8 shadow-2xl">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label class="block text-xs font-bold text-stone-500 uppercase mb-2">농지 면적 (평)</label>
+                            <input type="number" id="calc-area" value="3000" class="w-full p-3 bg-stone-100 border border-stone-200 rounded-lg focus:outline-none focus:border-emerald-500 font-bold text-stone-800" placeholder="예: 3000">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-stone-500 uppercase mb-2">연간 운영비 (만원)</label>
+                            <input type="number" id="calc-cost" value="5000" class="w-full p-3 bg-stone-100 border border-stone-200 rounded-lg focus:outline-none focus:border-emerald-500 font-bold text-stone-800" placeholder="예: 5000">
+                        </div>
+                    </div>
+                    
+                    <div class="mb-8">
+                        <label class="block text-xs font-bold text-stone-500 uppercase mb-2">
+                            예상 효율 개선율: <span id="efficiency-val" class="text-emerald-600">20</span>%
+                        </label>
+                        <input type="range" id="calc-efficiency" min="5" max="40" value="20" class="w-full h-2 bg-stone-200 rounded-lg appearance-none cursor-pointer accent-emerald-600">
+                        <div class="flex justify-between text-xs text-stone-400 mt-1">
+                            <span>보수적 (5%)</span>
+                            <span>평균 (20%)</span>
+                            <span>혁신적 (40%)</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-emerald-50 rounded-lg p-6 text-center border border-emerald-100">
+                        <span class="block text-xs font-bold text-emerald-800 uppercase mb-1">연간 예상 절감/추가 수익</span>
+                        <div class="text-4xl font-extrabold text-emerald-600 mb-1">
+                            <span id="result-savings">1,000</span> <span class="text-xl">만원</span>
+                        </div>
+                        <p class="text-xs text-stone-500">※ 이는 추정치이며 실제 환경에 따라 달라질 수 있습니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-stone-100 border-t border-stone-200 py-12">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-stone-500 text-sm mb-2">© 2024 정밀농업 사업화 가이드. All rights reserved.</p>
+            <p class="text-stone-400 text-xs">본 자료는 학습 및 사업 구상 목적으로 제작된 시뮬레이션입니다.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Data Store
+        const techDetails = {
+            'iot': {
+                title: 'IoT 센서 네트워크',
+                desc: '토양의 수분, 온도, pH농도 및 대기 환경(온습도, 일사량)을 실시간으로 측정하여 클라우드로 전송합니다. 농작물의 "음성"을 듣는 귀와 같은 역할을 합니다.',
+                biz: '하드웨어 설치/유지보수 서비스 또는 센서 데이터 구독 모델로 사업화 가능'
+            },
+            'drones': {
+                title: '드론 및 원격 탐사',
+                desc: '다중 분광(Multispectral) 카메라를 장착한 드론으로 작물의 엽록소 상태(NDVI)를 분석합니다. 육안으로 보이지 않는 병해충 및 스트레스 징후를 조기에 발견합니다.',
+                biz: '드론 방제 서비스, 작황 모니터링 리포트 판매, 농지 맵핑 용역'
+            },
+            'ai': {
+                title: 'AI 기반 데이터 분석',
+                desc: '수집된 데이터를 머신러닝 알고리즘으로 분석하여 수확 시기를 예측하고, 질병 발생 가능성을 경고하며, 최적의 생육 조건을 제시합니다.',
+                biz: '재배 솔루션 SaaS(Software as a Service) 개발, 컨설팅 및 작물 레시피 제공'
+            },
+            'vrt': {
+                title: '변량 살포 기술 (VRT)',
+                desc: '농지의 위치별 영양 상태에 따라 비료와 농약을 자동으로 조절하여 살포합니다. 필요한 곳에만 투입하여 비용을 절감하고 환경 오염을 줄입니다.',
+                biz: '농기계 부착형 제어 장치 판매, 정밀 방제 대행 서비스'
+            }
+        };
+
+        const roadmapSteps = {
+            '1': {
+                title: 'Phase 01: 니즈 분석 및 타겟팅',
+                content: `
+                    <h4 class="font-bold text-stone-800 mb-2">1. 타겟 작물 선정</h4>
+                    <p class="text-stone-600 mb-4 text-sm">고부가가치 작물(딸기, 파프리카 등 시설원예) 또는 대규모 노지 작물(벼, 콩) 중 하나를 선택하여 전문성을 확보해야 합니다.</p>
+                    <h4 class="font-bold text-stone-800 mb-2">2. 농가 통점(Pain Point) 파악</h4>
+                    <p class="text-stone-600 text-sm">노동력 부족 해결이 우선인가? 품질 향상이 우선인가? 농가의 가장 큰 고민을 해결하는 솔루션을 기획해야 합니다.</p>
+                `
+            },
+            '2': {
+                title: 'Phase 02: 기술 솔루션 선정',
+                content: `
+                    <h4 class="font-bold text-stone-800 mb-2">1. MVP(최소 기능 제품) 구성</h4>
+                    <p class="text-stone-600 mb-4 text-sm">초기부터 모든 센서와 AI를 도입하기보다, 가장 효과적인 기술(예: 자동 관수 제어)부터 패키징합니다.</p>
+                    <h4 class="font-bold text-stone-800 mb-2">2. 파트너십 구축</h4>
+                    <p class="text-stone-600 text-sm">하드웨어(센서/제어기) 제조사와 소프트웨어 개발사 간의 협력 또는 오픈소스 플랫폼 활용을 검토합니다.</p>
+                `
+            },
+            '3': {
+                title: 'Phase 03: 데이터 수집 및 파일럿',
+                content: `
+                    <h4 class="font-bold text-stone-800 mb-2">1. 테스트베드 운영</h4>
+                    <p class="text-stone-600 mb-4 text-sm">실제 농가 1~2곳과 협력하여 기술을 무료 또는 저가로 적용하고, 'Before & After' 데이터를 확보합니다.</p>
+                    <h4 class="font-bold text-stone-800 mb-2">2. 생육 데이터 표준화</h4>
+                    <p class="text-stone-600 text-sm">수집된 데이터의 품질을 높이기 위해 측정 주기, 단위, 저장 방식을 표준화하여 AI 학습 용이성을 확보합니다.</p>
+                `
+            },
+            '4': {
+                title: 'Phase 04: 서비스 확장 및 구독화',
+                content: `
+                    <h4 class="font-bold text-stone-800 mb-2">1. 구독 모델(RaaS) 도입</h4>
+                    <p class="text-stone-600 mb-4 text-sm">일회성 장비 판매가 아닌, 월 구독료를 받고 지속적인 데이터 리포트와 유지보수를 제공하는 모델로 전환합니다.</p>
+                    <h4 class="font-bold text-stone-800 mb-2">2. 규모의 경제 실현</h4>
+                    <p class="text-stone-600 text-sm">지역 단위 작목반이나 농협과 연계하여 권역별 통합 관제 시스템을 구축, 수익성을 극대화합니다.</p>
+                `
+            }
+        };
+
+        // --- Initialization ---
+        document.addEventListener('DOMContentLoaded', () => {
+            initCharts();
+            initInteractions();
+            initCalculator();
+            // Load initial content
+            renderRoadmap('1');
+            document.querySelector('.tech-card[data-tech="iot"]').click();
+        });
+
+        // --- Chart Logic ---
+        function initCharts() {
+            // 1. Market Growth (Line Chart)
+            const ctxGrowth = document.getElementById('growthChart').getContext('2d');
+            new Chart(ctxGrowth, {
+                type: 'line',
+                data: {
+                    labels: ['2020', '2022', '2024(E)', '2026(E)', '2028(E)', '2030(E)'],
+                    datasets: [{
+                        label: '시장 규모 (10억 달러)',
+                        data: [7.2, 9.5, 12.8, 16.5, 21.0, 27.5],
+                        borderColor: '#059669', // emerald-600
+                        backgroundColor: 'rgba(5, 150, 105, 0.1)',
+                        fill: true,
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: { beginAtZero: false, grid: { display: false } },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+
+            // 2. Efficiency Comparison (Radar Chart)
+            const ctxEff = document.getElementById('efficiencyChart').getContext('2d');
+            new Chart(ctxEff, {
+                type: 'radar',
+                data: {
+                    labels: ['수확량', '물 절약', '비료 효율', '노동력 절감', '품질 균일성'],
+                    datasets: [{
+                        label: '정밀농업',
+                        data: [90, 85, 80, 75, 88],
+                        borderColor: '#059669',
+                        backgroundColor: 'rgba(5, 150, 105, 0.2)',
+                    }, {
+                        label: '관행농업',
+                        data: [60, 40, 50, 40, 55],
+                        borderColor: '#a8a29e', // stone-400
+                        backgroundColor: 'rgba(168, 162, 158, 0.2)',
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    elements: { line: { borderWidth: 2 } }
+                }
+            });
+
+            // 3. Adoption (Plotly Bar Chart)
+            const adoptionData = [{
+                x: ['시설원예', '과수', '노지채소', '식량작물', '축산'],
+                y: [45, 25, 15, 10, 30], // Mock Adoption Rates %
+                type: 'bar',
+                marker: {
+                    color: ['#047857', '#10b981', '#6ee7b7', '#a7f3d0', '#34d399'] // Emerald shades
+                }
+            }];
+            const adoptionLayout = {
+                margin: { t: 20, b: 40, l: 40, r: 20 },
+                paper_bgcolor: "rgba(0,0,0,0)",
+                plot_bgcolor: "rgba(0,0,0,0)",
+                yaxis: { title: '도입률 (%)', range: [0, 60] },
+                height: 300 // Controlled height
+            };
+            Plotly.newPlot('adoptionChart', adoptionData, adoptionLayout, {displayModeBar: false, responsive: true});
+        }
+
+        // --- Interaction Logic ---
+        function initInteractions() {
+            // Tech Cards Interaction
+            const cards = document.querySelectorAll('.tech-card');
+            const detailSection = document.getElementById('tech-detail');
+            const detailTitle = document.getElementById('detail-title');
+            const detailDesc = document.getElementById('detail-desc');
+            const detailBiz = document.getElementById('detail-biz');
+
+            cards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const techKey = card.getAttribute('data-tech');
+                    const data = techDetails[techKey];
+
+                    // UI Update
+                    cards.forEach(c => c.classList.remove('border-emerald-500', 'ring-2', 'ring-emerald-200'));
+                    card.classList.add('border-emerald-500', 'ring-2', 'ring-emerald-200');
+
+                    // Content Update with simple animation
+                    detailSection.classList.remove('hidden');
+                    detailSection.style.opacity = '0';
+                    setTimeout(() => {
+                        detailTitle.innerText = data.title;
+                        detailDesc.innerText = data.desc;
+                        detailBiz.innerText = data.biz;
+                        detailSection.style.opacity = '1';
+                        detailSection.style.transition = 'opacity 0.3s ease';
+                    }, 50);
+                });
+            });
+
+            // Roadmap Stepper Interaction
+            const steps = document.querySelectorAll('.step-btn');
+            steps.forEach(step => {
+                step.addEventListener('click', () => {
+                    const stepNum = step.getAttribute('data-step');
+                    
+                    // Style Update
+                    steps.forEach(s => s.classList.remove('step-active'));
+                    step.classList.add('step-active');
+
+                    // Content Update
+                    renderRoadmap(stepNum);
+                });
+            });
+
+            // Mobile Menu Toggle
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            btn.addEventListener('click', () => {
+                menu.classList.toggle('hidden');
+            });
+        }
+
+        function renderRoadmap(stepNum) {
+            const container = document.getElementById('roadmap-content');
+            const data = roadmapSteps[stepNum];
+            container.innerHTML = `
+                <div class="animate-fade-in">
+                    <h3 class="text-2xl font-bold text-emerald-800 mb-4">${data.title}</h3>
+                    <div class="prose prose-stone">
+                        ${data.content}
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- Calculator Logic ---
+        function initCalculator() {
+            const areaInput = document.getElementById('calc-area');
+            const costInput = document.getElementById('calc-cost');
+            const effInput = document.getElementById('calc-efficiency');
+            const effDisplay = document.getElementById('efficiency-val');
+            const resultDisplay = document.getElementById('result-savings');
+
+            function calculate() {
+                const cost = parseFloat(costInput.value) || 0;
+                const efficiency = parseInt(effInput.value);
+                
+                // Simple Logic: Savings = Cost * (Efficiency / 100)
+                // Note: Real ROI is complex, this is for demonstration/engagement
+                const savings = Math.round(cost * (efficiency / 100));
+
+                effDisplay.innerText = efficiency;
+                
+                // Animate number
+                animateValue(resultDisplay, parseInt(resultDisplay.innerText.replace(/,/g, '')), savings, 500);
+            }
+
+            areaInput.addEventListener('input', calculate);
+            costInput.addEventListener('input', calculate);
+            effInput.addEventListener('input', calculate);
+        }
+
+        // Helper: Number Animation
+        function animateValue(obj, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                obj.innerHTML = Math.floor(progress * (end - start) + start).toLocaleString();
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+    </script>
+</body>
+</html>
