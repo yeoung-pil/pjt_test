@@ -40,6 +40,10 @@
      crossorigin="anonymous"></script>
 </head>
 <body class="bg-stone-50 text-stone-800 font-sans antialiased">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NDH85XPN"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
 
     <!-- Chosen Palette: Warm Neutrals (Stone/Beige) with Emerald Green Accents for an agricultural/organic feel. -->
     <!-- Application Structure Plan: 
@@ -685,6 +689,14 @@
                 const progress = Math.min((timestamp - startTimestamp) / duration, 1);
                 obj.innerHTML = Math.floor(progress * (end - start) + start).toLocaleString();
                 if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+    </script>
+</body>
+</html>< 1) {
                     window.requestAnimationFrame(step);
                 }
             };
